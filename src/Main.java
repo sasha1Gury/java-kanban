@@ -19,6 +19,14 @@ public class Main {
 
         taskManager.getListEpics();
         taskManager.getListTasks();
+
+        taskManager.retrievingById();
+
+        taskManager.removeAll();
+        taskManager.getListEpics();
+        taskManager.getListTasks();
+
+
     }
 
     public static void createTask() {
