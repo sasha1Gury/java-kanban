@@ -1,8 +1,8 @@
 public class Task {
-    String taskName;
-    String description;
-    String status;
-    int id;
+    protected String taskName;
+    protected String description;
+    protected String status;
+    protected int id;
 
     public Task() {
 
