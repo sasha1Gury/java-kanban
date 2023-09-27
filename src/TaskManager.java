@@ -9,11 +9,13 @@ public class TaskManager {
     HashMap<Integer, Epic> epics = new HashMap<>();
 
     public void doTasks(Task task) {
-        tasks.put(idTask++, task);
+        task.setId(idTask++);
+        tasks.put(task.getId(), task);
     }
 
     public void doEpic(Epic epic) {
-        epics.put(idEpic++, epic);
+        epic.setId(idEpic++);
+        epics.put(epic.getId(), epic);
     }
 
     public void createSubtask(int id, Subtask subtask) {
@@ -79,5 +81,35 @@ public class TaskManager {
         }
     }
 
-    
+    public void updateTask(Task task) {
+        tasks.put(task.getId(), task);
+    }
+
+    public void deleteTaskById(int id) {
+        tasks.remove(id);
+    }
+
+    public void updateEpic(Epic epic) {
+        epics.put(epic.getId(), epic);
+    }
+
+    public void deleteEpicById(int id) {
+        epics.remove(id);
+    }
+
+    public void getListSubtasksByEpicId(int id) {
+        String value = epics.get(id).subtasks.toString();
+        System.out.println("epic - " + id + " список - " + value);
+        System.out.println();
+    }
+
+    public void setEpicStatus() {
+        for (Integer name: epics.keySet()) {
+            if(epics.get(name).subtasks.isEmpty() || epics.get(name).isNew()) {
+                epics.get(name).status = "NEW";
+            } else if(epics.get(name).isDone()) {
+                epics.get(name).status = "DONE";
+            } else epics.get(name).status = "IN_PROGRESS";
+        }
+    }
 }

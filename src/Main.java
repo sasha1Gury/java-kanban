@@ -4,29 +4,41 @@ import java.util.Scanner;
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     static TaskManager taskManager = new TaskManager();
-
     public static void main(String[] args) {
 
-        Main.createTask();
-        Main.createTask();
+        //Main.createTask();
+        //Main.createTask();
 
         Main.createEpic();
-        Main.createEpic();
+        //Main.createEpic();
 
+        //Main.createSubtask();
         Main.createSubtask();
-        Main.createSubtask();
-        Main.createSubtask();
+        //Main.createSubtask();
 
-        taskManager.getListEpics();
+        //taskManager.getListEpics();
+        //taskManager.getListTasks();
+
+        //taskManager.retrievingById();
+
+        //Task task = new Task("Updated task", "upd");
+        //task.setId(1);
+        //Epic epic = new Epic("Updated epic", "upd");
+        //epic.setId(2);
+
+        //taskManager.updateTask(task);
+        //taskManager.deleteTaskById(task.getId());
+
+        //taskManager.updateEpic(epic);
+        //taskManager.deleteEpicById(epic.getId());
+        //taskManager.getListSubtasksByEpicId(1);
+
+        taskManager.setEpicStatus();
+
         taskManager.getListTasks();
-
-        taskManager.retrievingById();
-
-        taskManager.removeAll();
+        //taskManager.removeAll();
         taskManager.getListEpics();
-        taskManager.getListTasks();
-
-
+        //taskManager.getListTasks();
     }
 
     public static void createTask() {
