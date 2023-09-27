@@ -26,4 +26,12 @@ public class Task {
     public Integer getId() {
         return this.id;
     }
+
+    public void setStatusInProgress() {
+        this.status = "IN_PROGRESS";
+    }
+
+    public void setStatusDone() {
+        this.status = "DONE";
+    }
 }
