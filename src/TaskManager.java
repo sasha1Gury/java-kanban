@@ -52,19 +52,32 @@ public class TaskManager {
         return new ArrayList<>(subtasks);
     }
 
-    public void getTaskById(int id) {
+    public Task getTaskById(int id) {
         String value = tasks.get(id).toString();
         System.out.println(id + " " + value + " ");
+        return tasks.get(id);
     }
 
-    public void getEpicById(int id) {
+    public Epic getEpicById(int id) {
         String value = epics.get(id).toString();
         System.out.println(id + " " + value + " ");
+        return epics.get(id);
     }
 
-    public void removeAll() {
+    public Subtask getSubtaskById(int id) {
+        return subtasks.get(id);
+    }
+
+    public void removeTasks() {
         tasks.clear();
+    }
+
+    public void removeEpics() {
         epics.clear();
+    }
+
+    public void removeSubtasks() {
+        subtasks.clear();
     }
 
     public void retrievingById() {
