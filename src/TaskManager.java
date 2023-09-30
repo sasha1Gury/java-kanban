@@ -20,8 +20,8 @@ public class TaskManager {
     }
 
     public void createSubtask(int id, Subtask subtask) {
-        subtask.setStatusInProgress();
         subtasks.add(subtask);
+        epics.get(id).addSubtasks(subtask);
     }
 
     public ArrayList getListTasks() {
