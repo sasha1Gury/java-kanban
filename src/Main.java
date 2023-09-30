@@ -5,6 +5,12 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     static TaskManager taskManager = new TaskManager();
     public static void main(String[] args) {
+        createEpic();
+        createEpic();
+        createSubtask();
+        createSubtask();
+        createSubtask();
+        taskManager.getListEpics();
 
     }
 
@@ -13,7 +19,7 @@ public class Main {
         String taskName = scanner.nextLine();
         String description = scanner.nextLine();
         Task task = new Task(taskName, description);
-        taskManager.doTasks(task);
+        taskManager.createTasks(task);
     }
 
     public static void createEpic() {
@@ -21,7 +27,7 @@ public class Main {
         String taskName = scanner.nextLine();
         String description = scanner.nextLine();
         Epic epic = new Epic(taskName, description);
-        taskManager.doEpic(epic);
+        taskManager.createEpic(epic);
     }
 
     public static void createSubtask() {
