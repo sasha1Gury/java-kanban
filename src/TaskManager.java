@@ -20,18 +20,13 @@ public class TaskManager {
     }
 
     public void createSubtask(int id, Subtask subtask) {
+        subtask.setStatusInProgress();
         subtasks.add(subtask);
-        epics.get(id).setSubtasks(subtask);
     }
 
     public ArrayList getListTasks() {
         if (tasks.isEmpty()) {
             System.out.println("Список задач пуст");
-        }
-        for (Integer id: tasks.keySet()) {
-            String key = id.toString();
-            String value = tasks.get(id).toString();
-            System.out.println(key + " " + value);
         }
         return new ArrayList<>(tasks.values());
     }
@@ -39,11 +34,6 @@ public class TaskManager {
     public ArrayList getListEpics() {
         if (epics.isEmpty()) {
             System.out.println("Список эпиков пуст");
-        }
-        for (Integer name: epics.keySet()) {
-            String key = name.toString();
-            String value = epics.get(name).toString();
-            System.out.println(key + " " + value + " ");
         }
         return new ArrayList<>(epics.values());
     }
@@ -53,14 +43,10 @@ public class TaskManager {
     }
 
     public Task getTaskById(int id) {
-        String value = tasks.get(id).toString();
-        System.out.println(id + " " + value + " ");
         return tasks.get(id);
     }
 
     public Epic getEpicById(int id) {
-        String value = epics.get(id).toString();
-        System.out.println(id + " " + value + " ");
         return epics.get(id);
     }
 
@@ -78,28 +64,6 @@ public class TaskManager {
 
     public void removeSubtasks() {
         subtasks.clear();
-    }
-
-    public void retrievingById() {
-        System.out.println("Введите: 1 - задача, 2 - эпик");
-        Scanner scanner = new Scanner(System.in);
-        int identification;
-        int cas = scanner.nextInt();
-        switch (cas) {
-            case 1:
-                System.out.println("Введите идентификатор задачи");
-                identification = scanner.nextInt();
-                getTaskById(identification);
-                break;
-            case 2:
-                System.out.println("Введите идентификатор задачи");
-                identification = scanner.nextInt();
-                getEpicById(identification);
-                break;
-            default:
-                System.out.println("ERROR");
-                break;
-        }
     }
 
     public void updateTask(Task task) {
@@ -120,17 +84,15 @@ public class TaskManager {
 
     public void updateSubtask(Subtask subtask) {
         subtasks.set(subtask.getId(), subtask);
+        epics.get(subtask.getEpicId()).setSubtasks(subtask);
     }
 
     public void deleteSubtaskById(int id) {
         subtasks.remove(subtasks.get(id));
     }
 
-    public void getListSubtasksByEpicId(int id) {
-        String value = epics.get(id).getSubtasks().toString();
-        //String value = epics.get(id).subtasks.toString();
-        System.out.println("epic - " + id + " список - " + value);
-        System.out.println();
+    public ArrayList getListSubtasksByEpicId(int id) {
+        return new ArrayList<>(epics.get(id).getSubtasks());
     }
 
     public void setEpicStatus() {

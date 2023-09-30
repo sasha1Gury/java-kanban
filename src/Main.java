@@ -5,12 +5,6 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     static TaskManager taskManager = new TaskManager();
     public static void main(String[] args) {
-        createEpic();
-        createEpic();
-        createSubtask();
-        createSubtask();
-        createSubtask();
-        taskManager.getListEpics();
 
     }
 
@@ -35,9 +29,10 @@ public class Main {
         System.out.println("Введите название и описание подзадачи");
         String taskName = input.nextLine();
         String description = input.nextLine();
-        Subtask subtask = new Subtask(taskName, description);
+
         System.out.println("Введите id эпика, в который нужно добавить подзадачу");
         int id = input.nextInt();
+        Subtask subtask = new Subtask(taskName, description, id);
         taskManager.createSubtask(id, subtask);
     }
 }
