@@ -3,25 +3,23 @@ import java.util.HashMap;
 
 
 public class TaskManager {
-    private int idTask = 1;
-    private int idEpic = 1;
-    private int idSubtask = 1;
+    private int id = 1;
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap<Integer, Epic> epics = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
     public void createTasks(Task task) {
-        task.setId(idTask++);
+        task.setId(id++);
         tasks.put(task.getId(), task);
     }
 
     public void createEpic(Epic epic) {
-        epic.setId(idEpic++);
+        epic.setId(id++);
         epics.put(epic.getId(), epic);
     }
 
     public void createSubtask(Subtask subtask) {
-        subtask.setId(idSubtask++);
+        subtask.setId(id++);
         subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getEpicId()).addSubtasks(subtask);
         setEpicStatus();
