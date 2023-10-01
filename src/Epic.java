@@ -43,6 +43,14 @@ public class Epic extends Task {
     }
 
     public void setSubtasks(Subtask subtask) {
-        this.subtasks.set(subtask.getId() ,subtask);
+        this.subtasks.set(subtask.getId()-1 ,subtask);
+    }
+
+    public void removeSubtaskById(int id) {
+        subtasks.remove(id);
+    }
+
+    public void clearAllSubtasks() {
+        this.subtasks.clear();
     }
 }

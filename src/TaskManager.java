@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
+
 
 public class TaskManager {
     private int idTask = 1;
     private int idEpic = 1;
+    private int idSubtask = 1;
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap<Integer, Epic> epics = new HashMap<>();
-    private ArrayList<Subtask> subtasks = new ArrayList<>();
+    private HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
     public void createTasks(Task task) {
         task.setId(idTask++);
@@ -19,27 +20,23 @@ public class TaskManager {
         epics.put(epic.getId(), epic);
     }
 
-    public void createSubtask(int id, Subtask subtask) {
-        subtasks.add(subtask);
-        epics.get(id).addSubtasks(subtask);
+    public void createSubtask(Subtask subtask) {
+        subtask.setId(idSubtask++);
+        subtasks.put(subtask.getId(), subtask);
+        epics.get(subtask.getEpicId()).addSubtasks(subtask);
+        setEpicStatus();
     }
 
-    public ArrayList getListTasks() {
-        if (tasks.isEmpty()) {
-            System.out.println("Список задач пуст");
-        }
+    public ArrayList<Task> getListTasks() {
         return new ArrayList<>(tasks.values());
     }
 
-    public ArrayList getListEpics() {
-        if (epics.isEmpty()) {
-            System.out.println("Список эпиков пуст");
-        }
+    public ArrayList<Epic> getListEpics() {
         return new ArrayList<>(epics.values());
     }
 
-    public ArrayList getListSubtasks() {
-        return new ArrayList<>(subtasks);
+    public ArrayList<Subtask> getListSubtasks() {
+        return new ArrayList<>(subtasks.values());
     }
 
     public Task getTaskById(int id) {
@@ -60,10 +57,14 @@ public class TaskManager {
 
     public void removeEpics() {
         epics.clear();
+        subtasks.clear();
     }
 
     public void removeSubtasks() {
         subtasks.clear();
+        for (Integer name: epics.keySet()) {
+            epics.get(name).clearAllSubtasks();
+        }
     }
 
     public void updateTask(Task task) {
@@ -76,6 +77,7 @@ public class TaskManager {
 
     public void updateEpic(Epic epic) {
         epics.put(epic.getId(), epic);
+        setEpicStatus();
     }
 
     public void deleteEpicById(int id) {
@@ -83,19 +85,25 @@ public class TaskManager {
     }
 
     public void updateSubtask(Subtask subtask) {
-        subtasks.set(subtask.getId(), subtask);
+        subtasks.put(subtask.getId(), subtask);
+        System.out.println();
         epics.get(subtask.getEpicId()).setSubtasks(subtask);
+        setEpicStatus();
     }
 
     public void deleteSubtaskById(int id) {
-        subtasks.remove(subtasks.get(id));
+        //System.out.println(subtasks.get(id).getId());
+        epics.get(subtasks.get(id).getEpicId()).removeSubtaskById(epics.get(subtasks.get(id).getEpicId()).getSubtasks()
+                .indexOf(subtasks.get(id))); // Получение индекса subtask в списке
+        subtasks.remove(id);
+        setEpicStatus();
     }
 
-    public ArrayList getListSubtasksByEpicId(int id) {
+    public ArrayList<Subtask> getListSubtasksByEpicId(int id) {
         return new ArrayList<>(epics.get(id).getSubtasks());
     }
 
-    public void setEpicStatus() {
+    private void setEpicStatus() {
         for (Integer name: epics.keySet()) {
             if(epics.get(name).getSubtasks().isEmpty() || epics.get(name).isNew()) {
                 epics.get(name).status = "NEW";

@@ -5,7 +5,33 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     static TaskManager taskManager = new TaskManager();
     public static void main(String[] args) {
+        //createTask();
+        //createTask();
+        createEpic();
+        createEpic();
+        createSubtask();
+        createSubtask();
+        createSubtask();
+        createSubtask();
+        createSubtask();
+        //Subtask updated = new Subtask("UPD1", "da", 1);
+        //updated.setId(1);
+        //taskManager.updateSubtask(updated);
+        //updated.setStatusInProgress();
+        //taskManager.createSubtask(updated);
 
+        //taskManager.d
+        //taskManager.deleteTaskById(1);
+        //ArrayList<Subtask> epic1listSub = taskManager.getListSubtasksByEpicId(1);
+        //System.out.println(epic1listSub);
+        taskManager.deleteSubtaskById(5);
+
+        ArrayList<Task> listTasks = taskManager.getListTasks();
+        System.out.println(listTasks.toString());
+        ArrayList<Epic> listEpics = taskManager.getListEpics();
+        System.out.println(listEpics.toString());
+        ArrayList<Subtask> listSubtasks = taskManager.getListSubtasks();
+        System.out.println(listSubtasks.toString());
     }
 
     public static void createTask() {
@@ -31,8 +57,8 @@ public class Main {
         String description = input.nextLine();
 
         System.out.println("Введите id эпика, в который нужно добавить подзадачу");
-        int id = input.nextInt();
-        Subtask subtask = new Subtask(taskName, description, id);
-        taskManager.createSubtask(id, subtask);
+        int Epicid = input.nextInt();
+        Subtask subtask = new Subtask(taskName, description, Epicid);
+        taskManager.createSubtask(subtask);
     }
 }
