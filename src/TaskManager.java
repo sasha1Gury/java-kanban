@@ -90,7 +90,6 @@ public class TaskManager {
     }
 
     public void deleteSubtaskById(int id) {
-        //System.out.println(subtasks.get(id).getId());
         epics.get(subtasks.get(id).getEpicId()).removeSubtaskById(epics.get(subtasks.get(id).getEpicId()).getSubtasks()
                 .indexOf(subtasks.get(id))); // Получение индекса subtask в списке
         subtasks.remove(id);
