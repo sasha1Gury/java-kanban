@@ -131,6 +131,7 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
+
     private void setAllEpicStatus() {
         for (Integer name: epics.keySet()) {
             if(epics.get(name).getSubtasks().isEmpty() || epics.get(name).isNew()) {

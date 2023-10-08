@@ -10,7 +10,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return ("Название эпика - " + taskName + " Описание эпика - " + description  + " Status - " + status
+        return ("Название эпика - " + taskName + " Описание эпика - " + description  + " Status - " + status.toString()
                 + " все подзадачи - " + subtasks.toString());
     }
 
