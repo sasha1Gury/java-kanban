@@ -1,11 +1,11 @@
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public interface TaskManager {
 
     public void createTasks(Task task);
 
-    public void createEpic(Epic epic) ;
+    public void createEpic(Epic epic);
 
     public void createSubtask(Subtask subtask);
 
@@ -15,15 +15,15 @@ public interface TaskManager {
 
     public ArrayList<Subtask> getListSubtasks();
 
-    public Task getTaskById(int id) ;
+    public Task getTaskById(int id);
 
-    public Epic getEpicById(int id) ;
+    public Epic getEpicById(int id);
 
-    public Subtask getSubtaskById(int id) ;
+    public Subtask getSubtaskById(int id);
 
-    public void removeTasks() ;
+    public void removeTasks();
 
-    public void removeEpics() ;
+    public void removeEpics();
 
     public void removeSubtasks();
 
@@ -41,6 +41,5 @@ public interface TaskManager {
 
     public ArrayList<Subtask> getListSubtasksByEpicId(int id);
 
-    void setEpicStatus();
-
+    List<Task> getHistory();
 }
