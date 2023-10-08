@@ -1,7 +1,7 @@
 public class Task {
     protected String taskName;
     protected String description;
-    protected String status;
+    protected Status status;
     protected int id;
 
     public Task() {
@@ -11,12 +11,12 @@ public class Task {
     public Task(String taskName, String description) {
         this.taskName = taskName;
         this.description = description;
-        this.status = "NEW";
+        this.status = Status.NEW;
     }
 
     @Override
     public String toString() {
-        return ("Название задачи - " + taskName + " Описание задачи - " + description + " Status - " + status);
+        return ("Название задачи - " + taskName + " Описание задачи - " + description + " Status - " + status.toString());
     }
 
     public void setId(Integer id) {
@@ -28,10 +28,10 @@ public class Task {
     }
 
     public void setStatusInProgress() {
-        this.status = "IN_PROGRESS";
+        this.status = Status.IN_PROGRESS;
     }
 
     public void setStatusDone() {
-        this.status = "DONE";
+        this.status = Status.DONE;
     }
 }

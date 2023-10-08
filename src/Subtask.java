@@ -4,7 +4,7 @@ public class Subtask extends Task {
     public Subtask(String taskName, String description, int epicId) {
         super(taskName, description);
         this.epicId = epicId;
-        this.status = "NEW";
+        this.status = Status.NEW;
     }
 
     @Override

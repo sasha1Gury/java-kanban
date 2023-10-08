@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-    static InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+    static TaskManager taskManager = Managers.getDefault();
     public static void main(String[] args) {
 
     }
@@ -12,7 +12,7 @@ public class Main {
         String taskName = scanner.nextLine();
         String description = scanner.nextLine();
         Task task = new Task(taskName, description);
-        inMemoryTaskManager.createTasks(task);
+        taskManager.createTasks(task);
     }
 
     public static void createEpic() {
@@ -20,7 +20,7 @@ public class Main {
         String taskName = scanner.nextLine();
         String description = scanner.nextLine();
         Epic epic = new Epic(taskName, description);
-        inMemoryTaskManager.createEpic(epic);
+        taskManager.createEpic(epic);
     }
 
     public static void createSubtask() {
@@ -32,6 +32,6 @@ public class Main {
         System.out.println("Введите id эпика, в который нужно добавить подзадачу");
         int Epicid = input.nextInt();
         Subtask subtask = new Subtask(taskName, description, Epicid);
-        inMemoryTaskManager.createSubtask(subtask);
+        taskManager.createSubtask(subtask);
     }
 }
