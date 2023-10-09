@@ -15,11 +15,11 @@ public interface TaskManager {
 
     public void createSubtask(Subtask subtask);
 
-    public ArrayList<Task> getListTasks();
+    public List<Task> getListTasks();
 
-    public ArrayList<Epic> getListEpics();
+    public List<Epic> getListEpics();
 
-    public ArrayList<Subtask> getListSubtasks();
+    public List<Subtask> getListSubtasks();
 
     public Task getTaskById(int id);
 

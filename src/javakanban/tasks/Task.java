@@ -18,7 +18,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return ("Название задачи - " + taskName + " Описание задачи - " + description + " javakanban.tasks.Status - " + status.toString());
+        return ("Название задачи - " + taskName + " Описание задачи - " + description + " Статус - " + status.toString());
     }
 
     public void setId(Integer id) {

@@ -14,7 +14,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return ("Название эпика - " + taskName + " Описание эпика - " + description  + " javakanban.tasks.Status - " + status.toString()
+        return ("Название эпика - " + taskName + " Описание эпика - " + description  + " Статус - " + status.toString()
                 + " все подзадачи - " + subtasks.toString());
     }
 
