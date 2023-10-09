@@ -1,7 +1,9 @@
+package javakanban.tasks;
+
 public class Task {
     protected String taskName;
     protected String description;
-    protected Status status;
+    public Status status;
     protected int id;
 
     public Task() {
@@ -16,7 +18,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return ("Название задачи - " + taskName + " Описание задачи - " + description + " Status - " + status.toString());
+        return ("Название задачи - " + taskName + " Описание задачи - " + description + " javakanban.tasks.Status - " + status.toString());
     }
 
     public void setId(Integer id) {

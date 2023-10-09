@@ -1,3 +1,7 @@
+package javakanban.managers;
+
+import javakanban.tasks.Task;
+
 import java.util.List;
 
 public interface HistoryManager {

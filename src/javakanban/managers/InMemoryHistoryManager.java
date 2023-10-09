@@ -1,9 +1,13 @@
-import java.util.ArrayList;
+package javakanban.managers;
+
+import javakanban.tasks.Task;
+
+import java.util.LinkedList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private static final int MAX_COUNT = 10;
-    private final List<Task> history = new ArrayList<>();
+    private final List<Task> history = new LinkedList<>();
 
     @Override
     public List<Task> getHistory() {

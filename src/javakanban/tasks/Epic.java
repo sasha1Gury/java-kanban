@@ -1,3 +1,7 @@
+package javakanban.tasks;
+
+import javakanban.tasks.Subtask;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {
@@ -10,7 +14,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return ("Название эпика - " + taskName + " Описание эпика - " + description  + " Status - " + status.toString()
+        return ("Название эпика - " + taskName + " Описание эпика - " + description  + " javakanban.tasks.Status - " + status.toString()
                 + " все подзадачи - " + subtasks.toString());
     }
 

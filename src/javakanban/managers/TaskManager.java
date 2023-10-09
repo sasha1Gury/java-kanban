@@ -1,3 +1,9 @@
+package javakanban.managers;
+
+import javakanban.tasks.Epic;
+import javakanban.tasks.Subtask;
+import javakanban.tasks.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +45,7 @@ public interface TaskManager {
 
     public void deleteSubtaskById(int id);
 
-    public ArrayList<Subtask> getListSubtasksByEpicId(int id);
+    public List<Subtask> getListSubtasksByEpicId(int id);
 
-    List<Task> getHistory();
+    public List<Task> getHistory();
 }

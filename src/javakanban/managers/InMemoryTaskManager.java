@@ -1,3 +1,11 @@
+package javakanban.managers;
+
+import javakanban.managers.HistoryManager;
+import javakanban.tasks.Epic;
+import javakanban.tasks.Status;
+import javakanban.tasks.Subtask;
+import javakanban.tasks.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -1,3 +1,9 @@
+import javakanban.managers.Managers;
+import javakanban.managers.TaskManager;
+import javakanban.tasks.Epic;
+import javakanban.tasks.Subtask;
+import javakanban.tasks.Task;
+
 import java.util.Scanner;
 
 public class Main {
