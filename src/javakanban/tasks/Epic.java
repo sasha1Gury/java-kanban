@@ -1,7 +1,5 @@
 package javakanban.tasks;
 
-import javakanban.tasks.Subtask;
-
 import java.util.ArrayList;
 
 public class Epic extends Task {
