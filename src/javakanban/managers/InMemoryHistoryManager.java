@@ -22,9 +22,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     Node last;
     Map<Integer, Node> nodes = new HashMap<>();
 
-    private static final int MAX_COUNT = 10;
-    private final LinkedList<Task> history = new LinkedList<>();
-
     @Override
     public List<Task> getHistory() {
         List<Task> result = new ArrayList<>();
@@ -46,6 +43,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         last = node;
         nodes.put(task.getId(), node);
     }
+
     @Override
     public void remove(int id) {
         Node remove = nodes.remove(id);

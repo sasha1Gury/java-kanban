@@ -6,40 +6,39 @@ import javakanban.tasks.Epic;
 import javakanban.tasks.Subtask;
 import javakanban.tasks.Task;
 
-import java.util.Scanner;
 
 public class Main {
-    static Scanner scanner = new Scanner(System.in);
     static TaskManager taskManager = Managers.getDefault();
     public static void main(String[] args) {
-
-    }
-
-    public static void createTask() {
-        System.out.println("Введите название и описание задачи");
-        String taskName = scanner.nextLine();
-        String description = scanner.nextLine();
-        Task task = new Task(taskName, description);
-        taskManager.createTasks(task);
-    }
-
-    public static void createEpic() {
-        System.out.println("Введите название и описание эпика");
-        String taskName = scanner.nextLine();
-        String description = scanner.nextLine();
-        Epic epic = new Epic(taskName, description);
+        /*
+        Epic epic = new Epic("epc1", "description");
         taskManager.createEpic(epic);
-    }
+        Epic epic1 = new Epic("epc2", "description");
+        taskManager.createEpic(epic1);
 
-    public static void createSubtask() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Введите название и описание подзадачи");
-        String taskName = input.nextLine();
-        String description = input.nextLine();
-
-        System.out.println("Введите id эпика, в который нужно добавить подзадачу");
-        int Epicid = input.nextInt();
-        Subtask subtask = new Subtask(taskName, description, Epicid);
+        Subtask subtask = new Subtask("sub1", "description", epic.getId());
         taskManager.createSubtask(subtask);
+        Subtask subtask1 = new Subtask("sub2", "description", epic.getId());
+        taskManager.createSubtask(subtask1);
+        Subtask subtask2 = new Subtask("sub2", "description", epic.getId());
+        taskManager.createSubtask(subtask2);
+
+        Task task = new Task("tsk1", "description");
+        taskManager.createTasks(task);
+        Task task2 = new Task("tsk2", "description");
+        taskManager.createTasks(task2);
+
+        System.out.println(taskManager.getTaskById(task.getId()));
+        System.out.println(taskManager.getTaskById(task2.getId()));
+        System.out.println(taskManager.getTaskById(task2.getId()));
+        System.out.println(taskManager.getTaskById(task.getId()));
+        System.out.println(taskManager.getEpicById(epic.getId()));
+        System.out.println(taskManager.getEpicById(epic1.getId()));
+        taskManager.deleteEpicById(epic.getId());
+
+        System.out.println("History === ==== ==== === == == == ");
+
+        System.out.println(taskManager.getHistory().toString());
+         */
     }
 }

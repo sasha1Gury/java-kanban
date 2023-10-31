@@ -109,7 +109,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteEpicById(int id) {
-        epics.get(id).clearSubtasksByEpic(id);
+        epics.get(id).clearAllSubtasks();
         epics.remove(id);
     }
 
