@@ -2,7 +2,10 @@ package javakanban.managers;
 
 import javakanban.tasks.Task;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
@@ -18,9 +21,9 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    Node first;
-    Node last;
-    Map<Integer, Node> nodes = new HashMap<>();
+    private Node first;
+    private Node last;
+    private final Map<Integer, Node> nodes = new HashMap<>();
 
     @Override
     public List<Task> getHistory() {

@@ -10,7 +10,7 @@ import javakanban.tasks.Task;
 public class Main {
     static TaskManager taskManager = Managers.getDefault();
     public static void main(String[] args) {
-        /*
+/*
         Epic epic = new Epic("epc1", "description");
         taskManager.createEpic(epic);
         Epic epic1 = new Epic("epc2", "description");
@@ -39,6 +39,6 @@ public class Main {
         System.out.println("History === ==== ==== === == == == ");
 
         System.out.println(taskManager.getHistory().toString());
-         */
+ */
     }
 }
