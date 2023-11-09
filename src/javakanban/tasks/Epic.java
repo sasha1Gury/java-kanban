@@ -8,13 +8,9 @@ public class Epic extends Task {
     public Epic(String taskName, String description){
         super(taskName, description);
         this.status = Status.NEW;
+        this.type = Type.EPIC;
     }
 
-    @Override
-    public String toString() {
-        return ("Название эпика - " + taskName + " Описание эпика - " + description  + " Статус - " + status.toString()
-                + " все подзадачи - " + subtasks.toString());
-    }
 
     public boolean isDone() {
         int flag = 0;

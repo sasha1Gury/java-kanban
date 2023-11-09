@@ -5,6 +5,7 @@ public class Task {
     protected String description;
     public Status status;
     protected int id;
+    protected Type type;
 
     public Task() {
 
@@ -14,11 +15,12 @@ public class Task {
         this.taskName = taskName;
         this.description = description;
         this.status = Status.NEW;
+        this.type = Type.TASK;
     }
 
     @Override
     public String toString() {
-        return ("Название задачи - " + taskName + " Описание задачи - " + description + " Статус - " + status.toString());
+        return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + "," + "");
     }
 
     public void setId(Integer id) {

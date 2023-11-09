@@ -7,11 +7,12 @@ public class Subtask extends Task {
         super(taskName, description);
         this.epicId = epicId;
         this.status = Status.NEW;
+        this.type = Type.SUBTASK;
     }
 
     @Override
     public String toString() {
-        return "Подзадача - " + taskName + " Описание - " + description + " Статус - " + status.toString() + " ИД эпика " + epicId;
+        return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + "," + getEpicId());
     }
 
     public int getEpicId() {
