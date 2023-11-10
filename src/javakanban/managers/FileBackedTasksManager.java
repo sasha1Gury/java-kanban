@@ -24,6 +24,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
             List<Task> tasks = getListTasks();
             List<Epic> epics = getListEpics();
             List<Subtask> subtasks = getListSubtasks();
+            List<Task> history = getHistory();
             for (Task t: tasks) {
                 fileWriter.write(t.toString() + "\n");
             }
@@ -32,6 +33,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
             }
             for (Subtask s: subtasks) {
                 fileWriter.write(s.toString() + "\n");
+            }
+            for (Task h: history) {
+                fileWriter.write(h.getId() + ",");
             }
         }
     }
