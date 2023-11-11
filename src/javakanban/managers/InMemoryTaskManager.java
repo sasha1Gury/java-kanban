@@ -6,6 +6,7 @@ import javakanban.tasks.Status;
 import javakanban.tasks.Subtask;
 import javakanban.tasks.Task;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +36,6 @@ public class InMemoryTaskManager implements TaskManager {
     public void createSubtask(Subtask subtask) {
         subtask.setId(id++);
         subtasks.put(subtask.getId(), subtask);
-        System.out.println(epics.get(subtask.getEpicId()));
         epics.get(subtask.getEpicId()).addSubtasks(subtask);
         setEpicStatus(epics.get(subtask.getEpicId()));
     }
