@@ -6,6 +6,7 @@ import javakanban.tasks.Subtask;
 import javakanban.tasks.Task;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.List;
 
 
@@ -13,6 +14,70 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
     private final File file;
     public FileBackedTasksManager(File file) {
         this.file = file;
+    }
+
+    public static void main(String[] args) {
+        FileBackedTasksManager fileBackedTasksManager = FileBackedTasksManager
+                .loadFromFile(new File("resource/tasks.csv"));
+        System.out.println(fileBackedTasksManager);
+
+    }
+
+    public static FileBackedTasksManager loadFromFile(File file) {
+        final FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
+
+        try {
+            final String csv = Files.readString(file.toPath());
+            final String[] lines = csv.split("\n");
+            int maxId = -1;
+
+            for (int i = 1; i < lines.length; i++) {
+                if (lines[i].isEmpty()) break;
+                Task task = CSVTaskFormat.taskFromString(lines[i]);
+                if (task.getId() > maxId) maxId = task.getId()+1;
+                fileBackedTasksManager.putTasksByTypes(task);
+            }
+            if (!lines[lines.length - 1].isEmpty()) {
+                String history = lines[lines.length - 1];
+                for (Integer id : CSVTaskFormat.historyFromString(history)) {
+                    Task task = fileBackedTasksManager.findTask(id);
+                    fileBackedTasksManager.historyManager.addTaskToHistory(task);
+
+                }
+            }
+
+            for(Subtask subtask: fileBackedTasksManager.getListSubtasks()) {
+                Epic epic = (Epic) fileBackedTasksManager.findTask(subtask.getEpicId());
+                epic.addSubtask(subtask);
+            }
+
+            fileBackedTasksManager.setId(maxId);
+
+        } catch (IOException e) {
+            throw new ManagerSaveException("Can't read from file - " + file.getName(), e);
+        }
+        return fileBackedTasksManager;
+    }
+
+    protected Task findTask(int id) {
+        Task task = tasks.get(id);
+        if(task != null) return task;
+        Subtask subtask = subtasks.get(id);
+        if(subtask != null) return subtask;
+        return epics.get(id);
+    }
+    private void putTasksByTypes(Task task) {
+        switch (task.getType()){
+            case TASK:
+                tasks.put(task.getId(), task);
+                break;
+            case EPIC:
+                epics.put(task.getId(), (Epic)task);
+                break;
+            case SUBTASK:
+                subtasks.put(task.getId(), (Subtask) task);
+                break;
+        }
     }
 
     private void save() {
@@ -31,7 +96,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
             for (Subtask s: subtasks) {
                 bufferedWriter.write(s.toString() + "\n");
             }
-            bufferedWriter.newLine();
+            bufferedWriter.write("\n");
             for (Task h: history) {
                 bufferedWriter.write(h.getId() + ",");
             }

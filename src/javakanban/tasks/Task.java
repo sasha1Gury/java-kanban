@@ -11,6 +11,14 @@ public class Task {
 
     }
 
+    public Task(Integer id, String taskName, String description, Status status) {
+        this.id = id;
+        this.taskName = taskName;
+        this.description = description;
+        this.status = status;
+        this.type = Type.TASK;
+    }
+
     public Task(String taskName, String description) {
         this.taskName = taskName;
         this.description = description;
@@ -37,5 +45,9 @@ public class Task {
 
     public void setStatusDone() {
         this.status = Status.DONE;
+    }
+
+    public Type getType() {
+        return this.type;
     }
 }

@@ -1,12 +1,10 @@
 package javakanban.managers;
 
-import javakanban.managers.HistoryManager;
 import javakanban.tasks.Epic;
 import javakanban.tasks.Status;
 import javakanban.tasks.Subtask;
 import javakanban.tasks.Task;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +12,14 @@ import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id = 1;
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private final HistoryManager historyManager = Managers.getDefaultHistory();
+    protected final HashMap<Integer, Task> tasks = new HashMap<>();
+    protected final HashMap<Integer, Epic> epics = new HashMap<>();
+    protected final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    protected final HistoryManager historyManager = Managers.getDefaultHistory();
 
+    protected void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public void createTasks(Task task) {
@@ -36,7 +37,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void createSubtask(Subtask subtask) {
         subtask.setId(id++);
         subtasks.put(subtask.getId(), subtask);
-        epics.get(subtask.getEpicId()).addSubtasks(subtask);
+        epics.get(subtask.getEpicId()).addSubtask(subtask);
         setEpicStatus(epics.get(subtask.getEpicId()));
     }
 

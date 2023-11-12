@@ -10,6 +10,15 @@ public class Subtask extends Task {
         this.type = Type.SUBTASK;
     }
 
+    public Subtask(Integer id, String taskName, String description, Status status, int epicId) {
+        this.id = id;
+        this.taskName = taskName;
+        this.description = description;
+        this.status = status;
+        this.type = Type.SUBTASK;
+        this.epicId = epicId;
+    }
+
     @Override
     public String toString() {
         return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + "," + getEpicId());
