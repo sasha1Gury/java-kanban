@@ -1,9 +1,5 @@
 package javakanban.tasks;
 
-import javakanban.managers.InMemoryTaskManager;
-import javakanban.managers.TaskManager;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,6 +40,7 @@ class EpicStatusTest {
         epic.addSubtask(subtask);
         subtask1.setStatusDone();
         epic.addSubtask(subtask1);
+
         Status expected = Status.DONE;
 
         assertEquals(expected, epic.getStatus());
