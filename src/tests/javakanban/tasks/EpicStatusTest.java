@@ -2,80 +2,74 @@ package javakanban.tasks;
 
 import javakanban.managers.InMemoryTaskManager;
 import javakanban.managers.TaskManager;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EpicStatusTest {
-    static TaskManager taskManager;
     static Epic epic;
+    static Subtask subtask;
+    static Subtask subtask1;
 
-    @BeforeAll
-    static void setUp() {
-        taskManager = new InMemoryTaskManager();
+    @BeforeEach
+    void beforeEach() {
         epic = new Epic("epc1", "description");
-        taskManager.createEpic(epic);
+        subtask = new Subtask("sub1", "description", epic.getId());
+        subtask1 = new Subtask("sub1", "description", epic.getId());
     }
 
     @Test
     public void statusShouldBeNewWhenSubtasksIsEmpty() {
         Status expected = Status.NEW;
 
-        assertEquals(expected, taskManager.getEpicById(epic.getId()).getStatus());
+        assertEquals(expected, epic.getStatus());
     }
 
     @Test
     public void statusShouldBeNewWhenSubtasksIsNew() {
-        Subtask subtask = new Subtask("sub1", "description", epic.getId());
-        taskManager.createSubtask(subtask);
-        Subtask subtask1 = new Subtask("sub2", "description", epic.getId());
-        taskManager.createSubtask(subtask1);
+        epic.addSubtask(subtask);
+        epic.addSubtask(subtask1);
 
         Status expected = Status.NEW;
 
-        assertEquals(expected, taskManager.getEpicById(epic.getId()).getStatus());
+        assertEquals(expected, epic.getStatus());
     }
 
     @Test
     public void statusShouldBeDoneWhenSubtasksIsDone() {
-        Subtask subtask = new Subtask("sub1", "description", epic.getId());
         subtask.setStatusDone();
-        taskManager.createSubtask(subtask);
-        Subtask subtask1 = new Subtask("sub2", "description", epic.getId());
+        epic.addSubtask(subtask);
         subtask1.setStatusDone();
-        taskManager.createSubtask(subtask1);
-
+        epic.addSubtask(subtask1);
         Status expected = Status.DONE;
 
-        assertEquals(expected, taskManager.getEpicById(epic.getId()).getStatus());
+        assertEquals(expected, epic.getStatus());
     }
 
     @Test
     public void statusShouldBeInProgressWhenSubtasksIsDoneAndNew() {
-        Subtask subtask = new Subtask("sub1", "description", epic.getId());
         subtask.setStatusDone();
-        taskManager.createSubtask(subtask);
-        Subtask subtask1 = new Subtask("sub2", "description", epic.getId());
+        epic.addSubtask(subtask);
         subtask1.setStatusInProgress();
-        taskManager.createSubtask(subtask1);
+        epic.addSubtask(subtask1);
 
         Status expected = Status.IN_PROGRESS;
 
-        assertEquals(expected, taskManager.getEpicById(epic.getId()).getStatus());
+        assertEquals(expected, epic.getStatus());
     }
 
     @Test
     public void statusShouldBeInProgressWhenSubtasksIsInProgress() {
-        Subtask subtask = new Subtask("sub1", "description", epic.getId());
         subtask.setStatusInProgress();
-        taskManager.createSubtask(subtask);
-        Subtask subtask1 = new Subtask("sub2", "description", epic.getId());
+        epic.addSubtask(subtask);
         subtask1.setStatusInProgress();
-        taskManager.createSubtask(subtask1);
+        epic.addSubtask(subtask1);
 
         Status expected = Status.IN_PROGRESS;
 
-        assertEquals(expected, taskManager.getEpicById(epic.getId()).getStatus());
+        assertEquals(expected, epic.getStatus());
     }
 }
