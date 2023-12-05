@@ -28,7 +28,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + "," + "");
+        return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + ",");
     }
 
     public void setId(Integer id) {
@@ -45,6 +45,10 @@ public class Task {
 
     public void setStatusDone() {
         this.status = Status.DONE;
+    }
+
+    public Status getStatus() {
+        return this.status;
     }
 
     public Type getType() {
