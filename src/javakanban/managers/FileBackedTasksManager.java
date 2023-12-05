@@ -42,7 +42,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                 for (Integer id : CSVTaskFormat.historyFromString(history)) {
                     Task task = fileBackedTasksManager.findTask(id);
                     fileBackedTasksManager.historyManager.addTaskToHistory(task);
-
                 }
             }
 
