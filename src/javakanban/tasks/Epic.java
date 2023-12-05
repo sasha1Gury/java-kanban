@@ -46,6 +46,7 @@ public class Epic extends Task {
 
     public void addSubtask(Subtask subtask) {
         this.subtasks.add(subtask);
+        setEpicStatus(this);
     }
 
     public void setSubtasks(Subtask subtask) {
@@ -62,5 +63,13 @@ public class Epic extends Task {
 
     public void clearSubtasksByEpic(int id) {
         subtasks.removeIf(subtask -> subtask.getEpicId() == id);
+    }
+
+    private void setEpicStatus(Epic epic) {
+        if(epic.getSubtasks().isEmpty() || epic.isNew()) {
+            epic.status = Status.NEW;
+        } else if(epic.isDone()) {
+            epic.status = Status.DONE;
+        } else epic.status = Status.IN_PROGRESS;
     }
 }
