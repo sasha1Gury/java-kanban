@@ -48,6 +48,7 @@ public class Epic extends Task {
 
     public void addSubtask(Subtask subtask) {
         this.subtasks.put(subtask.getId(), subtask);
+        setEpicStatus(this);
     }
 
     public void setSubtasks(Subtask subtask) {
