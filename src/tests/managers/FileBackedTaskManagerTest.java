@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTasksManager>{
     @BeforeEach
@@ -49,7 +51,40 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTasksMa
         Assertions.assertEquals(task.toString(), resultTask);
         Assertions.assertEquals(epic.toString(), resultEpic);
         Assertions.assertEquals(subtask1.toString(), resultSubtask);
+    }
 
+    @Test
+    public void shouldSaveAndLoadFromFileEmptyLists() throws IOException {
+        Path path = Path.of("resource/tasksTest.csv");
+        Files.writeString(path, "");
+
+        taskManager.save();
+
+        FileBackedTasksManager newTaskManager = FileBackedTasksManager.loadFromFile(new File("resource/tasksTest.csv"));
+
+        Assertions.assertEquals(0, newTaskManager.getListTasks().size());
+        Assertions.assertEquals(0, newTaskManager.getListEpics().size());
+        Assertions.assertEquals(0, newTaskManager.getListSubtasks().size());
+    }
+
+    @Test
+    public void shouldSaveAndLoadFromFileEpicWithNoSubtasks() throws IOException {
+        Path path = Path.of("resource/tasksTest.csv");
+        Files.writeString(path, "");
+
+        taskManager.createTasks(task);
+        taskManager.createEpic(epic);
+        taskManager.save();
+
+        FileBackedTasksManager newTaskManager = FileBackedTasksManager.loadFromFile(new File("resource/tasksTest.csv"));
+
+        String resultTask = newTaskManager.getTaskById(task.getId()).toString();
+        String resultEpic = newTaskManager.getEpicById(epic.getId()).toString();
+
+        Assertions.assertEquals(0, newTaskManager.getListSubtasksByEpicId(epic.getId()).size());
+        Assertions.assertEquals(0, newTaskManager.getListSubtasks().size());
+        Assertions.assertEquals(task.toString(), resultTask);
+        Assertions.assertEquals(epic.toString(), resultEpic);
     }
 
 }
