@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class InMemoryHistoryManagerTest {
@@ -43,6 +44,42 @@ class InMemoryHistoryManagerTest {
         historyManager.remove(task.getId());
 
         Assertions.assertEquals(0, historyManager.getHistory().size());
+    }
+
+    @Test
+    void shouldRemoveFromHistoryCentre() {
+        task.setId(1);
+        Task taskCentre = new Task("centre", "des");
+        taskCentre.setId(2);
+        Task taskLast = new Task("Last", "des");
+        taskLast.setId(3);
+        historyManager.addTaskToHistory(task);
+        historyManager.addTaskToHistory(taskCentre);
+        historyManager.addTaskToHistory(taskLast);
+        historyManager.remove(taskCentre.getId());
+
+        List<Task> expected = new ArrayList<>();
+        expected.add(task); expected.add(taskLast);
+
+        Assertions.assertArrayEquals(expected.toArray(), historyManager.getHistory().toArray());
+    }
+
+    @Test
+    void shouldRemoveFromHistoryLast() {
+        task.setId(1);
+        Task taskCentre = new Task("centre", "des");
+        taskCentre.setId(2);
+        Task taskLast = new Task("Last", "des");
+        taskLast.setId(3);
+        historyManager.addTaskToHistory(task);
+        historyManager.addTaskToHistory(taskCentre);
+        historyManager.addTaskToHistory(taskLast);
+        historyManager.remove(taskLast.getId());
+
+        List<Task> expected = new ArrayList<>();
+        expected.add(task); expected.add(taskCentre);
+
+        Assertions.assertArrayEquals(expected.toArray(), historyManager.getHistory().toArray());
     }
 
 
