@@ -1,9 +1,12 @@
 package javakanban.tasks;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Epic extends Task {
-    private final ArrayList<Subtask> subtasks = new ArrayList<>();
+    private final Map<Integer, Subtask> subtasks = new HashMap<>();
 
     public Epic(String taskName, String description){
         super(taskName, description);
@@ -19,10 +22,9 @@ public class Epic extends Task {
         this.type = Type.EPIC;
     }
 
-
     public boolean isDone() {
         int flag = 0;
-        for (Subtask i : subtasks) {
+        for (Subtask i : subtasks.values()) {
             if (!(i.status == Status.DONE)) {
                 flag += 1;
             }
@@ -32,7 +34,7 @@ public class Epic extends Task {
 
     public boolean isNew() {
         int flag = 0;
-        for (Subtask i : subtasks) {
+        for (Subtask i : subtasks.values()) {
             if (!(i.status == Status.NEW)) {
                 flag += 1;
             }
@@ -40,29 +42,24 @@ public class Epic extends Task {
         return flag == 0;
     }
 
-    public ArrayList<Subtask> getSubtasks() {
-        return subtasks;
+    public List<Subtask> getSubtasks() {
+        return new ArrayList<>(subtasks.values());
     }
 
     public void addSubtask(Subtask subtask) {
-        this.subtasks.add(subtask);
-        setEpicStatus(this);
+        this.subtasks.put(subtask.getId(), subtask);
     }
 
     public void setSubtasks(Subtask subtask) {
-        this.subtasks.set(subtask.getId()-1 ,subtask);
+        this.subtasks.put(subtask.getId(), subtask);
     }
 
     public void removeSubtaskById(int id) {
-        subtasks.remove(id-1);
+        this.subtasks.remove(id);
     }
 
     public void clearAllSubtasks() {
         this.subtasks.clear();
-    }
-
-    public void clearSubtasksByEpic(int id) {
-        subtasks.removeIf(subtask -> subtask.getEpicId() == id);
     }
 
     private void setEpicStatus(Epic epic) {
