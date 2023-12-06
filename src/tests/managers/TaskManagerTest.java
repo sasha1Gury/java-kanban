@@ -198,4 +198,42 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Assertions.assertEquals(expected, result);
     }
 
+    @Test
+    public void shouldDeleteTaskById() {
+        taskManager.createTasks(task);
+        taskManager.deleteTaskById(task.getId());
+
+        List<Task> result = taskManager.getListTasks();
+        List<Task> expected = new ArrayList<>();
+
+        Assertions.assertArrayEquals(expected.toArray(), result.toArray());
+    }
+
+    @Test
+    public void shouldDeleteEpicByIdAndAllThatSubtasks() {
+        taskManager.createEpic(epic);
+        taskManager.createSubtask(subtask);
+        taskManager.deleteEpicById(epic.getId());
+
+        List<Subtask> subtaskResultList = taskManager.getListSubtasks();
+        List<Epic> result = taskManager.getListEpics();
+        List<Epic> expected = new ArrayList<>();
+
+        Assertions.assertArrayEquals(expected.toArray(), subtaskResultList.toArray());
+        Assertions.assertArrayEquals(expected.toArray(), result.toArray());
+    }
+
+    @Test
+    public void shouldDeleteSubtaskById() {
+        taskManager.createEpic(epic);
+        taskManager.createSubtask(subtask);
+        taskManager.deleteSubtaskById(subtask.getId());
+
+        List<Subtask> result = taskManager.getListSubtasksByEpicId(epic.getId());
+        List<Subtask> subtaskResultList = taskManager.getListSubtasks();
+        List<Subtask> expected = new ArrayList<>();
+
+        Assertions.assertArrayEquals(expected.toArray(), result.toArray());
+        Assertions.assertArrayEquals(expected.toArray(), subtaskResultList.toArray());
+    }
 }
