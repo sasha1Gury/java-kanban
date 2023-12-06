@@ -79,7 +79,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         }
     }
 
-    private void save() {
+    public void save() {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
             bufferedWriter.write("id,type,name,status,description,epic" + "\n");
             List<Task> tasks = getListTasks();
