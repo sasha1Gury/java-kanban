@@ -18,8 +18,6 @@ abstract class TaskManagerTest<T extends TaskManager> {
     Epic epic;
     Subtask subtask;
 
-
-
     @Test
     public void taskShouldBeAddedInListAfterCreate() {
         taskManager.createTasks(task);
