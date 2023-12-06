@@ -28,7 +28,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
 
         try {
             final String csv = Files.readString(file.toPath());
-            final String[] lines = csv.split("\n");
+            final String[] lines = csv.split("\n", -1);
             int maxId = -1;
 
             for (int i = 1; i < lines.length; i++) {
