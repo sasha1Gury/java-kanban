@@ -11,16 +11,15 @@ import org.junit.jupiter.api.BeforeEach;
 public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
     @BeforeEach
-    void setUp() {
+    void setTaskManager() {
         taskManager = new InMemoryTaskManager();
     }
 
     @BeforeEach
-    void setUpper() {
+    void setUp() {
         task = new Task("epic1", "de");
         epic = new Epic("epic", "descr");
         epic.setId(1);
         subtask = new Subtask("epic1", "de", epic.getId());
     }
-
 }
