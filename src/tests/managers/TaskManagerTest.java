@@ -234,4 +234,16 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Assertions.assertArrayEquals(expected.toArray(), result.toArray());
         Assertions.assertArrayEquals(expected.toArray(), subtaskResultList.toArray());
     }
+
+    @Test
+    public void shouldReturnListSubtasksByEpicId() {
+        taskManager.createEpic(epic);
+        taskManager.createSubtask(subtask);
+
+        List<Subtask> expected = new ArrayList<>();
+        expected.add(subtask);
+        List<Subtask> result = taskManager.getListSubtasksByEpicId(epic.getId());
+
+        Assertions.assertArrayEquals(expected.toArray(), result.toArray());
+    }
 }
