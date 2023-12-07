@@ -51,6 +51,9 @@ public class Epic extends Task {
     public void addSubtask(Subtask subtask) {
         this.subtasks.put(subtask.getId(), subtask);
         setEpicStatus(this);
+        if (subtask.getStartTime().isBefore(this.startTime)) {
+            this.startTime = subtask.getStartTime();
+        }
     }
 
     @Override
