@@ -1,5 +1,7 @@
 package javakanban.tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +51,14 @@ public class Epic extends Task {
     public void addSubtask(Subtask subtask) {
         this.subtasks.put(subtask.getId(), subtask);
         setEpicStatus(this);
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        Duration totalDuration = this.getSubtasks().stream()
+                .map(Subtask::getDuration)
+                .reduce(Duration.ZERO, Duration::plus);
+        return this.startTime.plus(totalDuration);
     }
 
     public void setSubtasks(Subtask subtask) {
