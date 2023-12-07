@@ -22,6 +22,8 @@ public class Task {
         this.description = description;
         this.status = status;
         this.type = Type.TASK;
+        this.duration = Duration.ofMinutes(0);
+        this.startTime = LocalDateTime.now();
     }
 
     public Task(String taskName, String description) {
@@ -29,6 +31,8 @@ public class Task {
         this.description = description;
         this.status = Status.NEW;
         this.type = Type.TASK;
+        this.duration = Duration.ofMinutes(0);
+        this.startTime = LocalDateTime.now();
     }
 
     public Task(String taskName, String description, int duration, LocalDateTime startTime) {

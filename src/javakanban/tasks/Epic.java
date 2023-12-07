@@ -16,10 +16,15 @@ public class Epic extends Task {
         this.type = Type.EPIC;
     }
 
+    public Epic(String taskName, String description, int duration, LocalDateTime startTime){
+        super(taskName, description, duration, startTime);
+        this.status = Status.NEW;
+        this.type = Type.EPIC;
+    }
+
     public Epic(Integer id, String taskName, String description, Status status) {
+        super(taskName, description);
         this.id = id;
-        this.taskName = taskName;
-        this.description = description;
         this.status = status;
         this.type = Type.EPIC;
     }

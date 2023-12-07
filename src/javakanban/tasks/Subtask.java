@@ -1,10 +1,20 @@
 package javakanban.tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
     private int epicId;
 
     public Subtask(String taskName, String description, int epicId) {
         super(taskName, description);
+        this.epicId = epicId;
+        this.status = Status.NEW;
+        this.type = Type.SUBTASK;
+    }
+
+    public Subtask(String taskName, String description, int epicId, int duration, LocalDateTime startTime) {
+        super(taskName, description, duration, startTime);
         this.epicId = epicId;
         this.status = Status.NEW;
         this.type = Type.SUBTASK;
