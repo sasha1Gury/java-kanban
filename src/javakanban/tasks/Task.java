@@ -45,6 +45,19 @@ public class Task {
         return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + ",");
     }
 
+    public LocalDateTime getEndTime() {
+        if (startTime == null) return null;
+        else return startTime.plus(duration);
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
