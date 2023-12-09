@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -45,5 +44,14 @@ public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager
         Assertions.assertEquals(task2, prioritizedTasks.get(0));
         Assertions.assertEquals(task1, prioritizedTasks.get(1));
         Assertions.assertEquals(task3, prioritizedTasks.get(2));
+    }
+
+    @Test
+    public void testValidationTimeOverlaps() {
+        Task task1 = new Task("Task", "description", 15, LocalDateTime.of(2023, 1, 1, 14, 30));
+        Task task2 = new Task("Task", "description", 80, LocalDateTime.of(2023, 1, 1, 13, 30));
+        taskManager.createTasks(task1);
+
+        Assertions.assertThrows(IllegalStateException.class, () -> taskManager.createTasks(task2));
     }
 }
