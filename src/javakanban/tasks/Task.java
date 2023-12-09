@@ -2,6 +2,7 @@ package javakanban.tasks;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Task {
     protected String taskName;
@@ -46,7 +47,10 @@ public class Task {
 
     @Override
     public String toString() {
-        return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + ",");
+        String startTimeString = startTime.format(DateTimeFormatter.ofPattern("yyy.MM.dd HH:mm"));
+        String durationString = String.valueOf(duration.toSeconds());
+        return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + ","
+                + durationString + "," + startTimeString);
     }
 
     public LocalDateTime getEndTime() {

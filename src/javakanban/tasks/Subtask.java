@@ -2,6 +2,7 @@ package javakanban.tasks;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Subtask extends Task {
     private int epicId;
@@ -30,7 +31,10 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + "," + getEpicId());
+        String startTimeString = startTime.format(DateTimeFormatter.ofPattern("yyy.MM.dd HH:mm"));
+        String durationString = String.valueOf(duration.toSeconds());
+        return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + ","
+                + durationString + "," + startTimeString + "," + getEpicId());
     }
 
     public int getEpicId() {
