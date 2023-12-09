@@ -60,6 +60,7 @@ public class Epic extends Task {
         Duration totalDuration = this.getSubtasks().stream()
                 .map(Subtask::getDuration)
                 .reduce(Duration.ZERO, Duration::plus);
+        this.duration = totalDuration;
         return this.startTime.plus(totalDuration);
     }
 
