@@ -30,7 +30,6 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
         Assertions.assertNotNull(result, "Задачи на возвращаются.");
         Assertions.assertEquals(1, taskManager.getListTasks().size(), "Неверное количество задач.");
-        System.out.println("[][][");
     }
 
     @Test
