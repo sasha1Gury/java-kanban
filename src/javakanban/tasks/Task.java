@@ -17,14 +17,14 @@ public class Task {
 
     }
 
-    public Task(Integer id, String taskName, String description, Status status) {
+    public Task(Integer id, String taskName, String description, Status status, int duration, LocalDateTime startTime) {
         this.id = id;
         this.taskName = taskName;
         this.description = description;
         this.status = status;
         this.type = Type.TASK;
-        this.duration = Duration.ofMinutes(0);
-        this.startTime = LocalDateTime.now();
+        this.duration = Duration.ofMinutes(duration);
+        this.startTime = startTime;
     }
 
     public Task(String taskName, String description) {
