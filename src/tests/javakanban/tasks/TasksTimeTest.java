@@ -55,5 +55,15 @@ public class TasksTimeTest {
         Assertions.assertEquals(expected, result);
     }
 
+    @Test
+    public void ifSubtasksIsEmptyEpicDurationShouldBe0() {
+        Epic epic = new Epic("Epic", "description");
+
+        LocalDateTime result = epic.getEndTime().truncatedTo(ChronoUnit.MINUTES);
+        LocalDateTime expected = LocalDateTime.now().plus(Duration.ofMinutes(0)).truncatedTo(ChronoUnit.MINUTES);
+
+        Assertions.assertEquals(expected, result);
+    }
+
 
 }
