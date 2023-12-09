@@ -6,6 +6,7 @@ import javakanban.tasks.Status;
 import javakanban.tasks.Subtask;
 import javakanban.tasks.Task;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -22,21 +23,24 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void createTasks(Task task) {
+    public void createTasks(Task task) throws IllegalStateException {
+        validationTimeOverlaps(task);
         task.setId(id++);
         tasks.put(task.getId(), task);
         prioritizedTasks.add(task);
     }
 
     @Override
-    public void createEpic(Epic epic) {
+    public void createEpic(Epic epic) throws IllegalStateException {
+        validationTimeOverlaps(epic);
         epic.setId(id++);
         epics.put(epic.getId(), epic);
         prioritizedTasks.add(epic);
     }
 
     @Override
-    public void createSubtask(Subtask subtask) {
+    public void createSubtask(Subtask subtask) throws IllegalStateException {
+        validationTimeOverlaps(subtask);
         subtask.setId(id++);
         subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getEpicId()).addSubtask(subtask);
@@ -97,7 +101,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Task task) {
+    public void updateTask(Task task) throws IllegalStateException {
+        validationTimeOverlaps(task);
         tasks.put(task.getId(), task);
     }
 
@@ -107,9 +112,11 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateEpic(Epic epic) {
+    public void updateEpic(Epic epic) throws IllegalStateException {
+        validationTimeOverlaps(epic);
         epics.put(epic.getId(), epic);
         setEpicStatus(epic);
+
     }
 
     @Override
@@ -122,7 +129,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateSubtask(Subtask subtask) {
+    public void updateSubtask(Subtask subtask) throws IllegalStateException {
+        validationTimeOverlaps(subtask);
         subtasks.put(subtask.getId(), subtask);
         System.out.println();
         epics.get(subtask.getEpicId()).setSubtasks(subtask);
@@ -168,5 +176,24 @@ public class InMemoryTaskManager implements TaskManager {
 
     public List<Task> getPrioritizedTasks() {
         return new ArrayList<>(prioritizedTasks);
+    }
+
+    private void validationTimeOverlaps(Task task) {
+        boolean hasOverlappingTask = getPrioritizedTasks().stream()
+                .anyMatch(existTask -> {
+                    LocalDateTime existStartTime = existTask.getStartTime();
+                    LocalDateTime existEndTime = existTask.getEndTime();
+
+                    return Objects.nonNull(existStartTime) &&
+                            Objects.nonNull(existEndTime) &&
+                            Objects.nonNull(task.getStartTime()) &&
+                            Objects.nonNull(task.getEndTime()) &&
+                            task.getStartTime().isBefore(existEndTime) &&
+                            task.getEndTime().isAfter(existStartTime);
+                });
+
+        if (hasOverlappingTask) {
+            throw new IllegalStateException("Ошибка. Временной интервал задачи пересекается с уже существующей задачей.");
+        }
     }
 }
