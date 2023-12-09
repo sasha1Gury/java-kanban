@@ -1,13 +1,12 @@
 package javakanban.managers;
 
+import javakanban.comparators.TimeComparator;
 import javakanban.tasks.Epic;
 import javakanban.tasks.Status;
 import javakanban.tasks.Subtask;
 import javakanban.tasks.Task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 public class InMemoryTaskManager implements TaskManager {
@@ -16,6 +15,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected final HashMap<Integer, Epic> epics = new HashMap<>();
     protected final HashMap<Integer, Subtask> subtasks = new HashMap<>();
     protected final HistoryManager historyManager = Managers.getDefaultHistory();
+    protected final Set<Task> prioritizedTasks = new TreeSet<>(new TimeComparator());
 
     protected void setId(int id) {
         this.id = id;
@@ -25,12 +25,14 @@ public class InMemoryTaskManager implements TaskManager {
     public void createTasks(Task task) {
         task.setId(id++);
         tasks.put(task.getId(), task);
+        prioritizedTasks.add(task);
     }
 
     @Override
     public void createEpic(Epic epic) {
         epic.setId(id++);
         epics.put(epic.getId(), epic);
+        prioritizedTasks.add(epic);
     }
 
     @Override
@@ -39,6 +41,7 @@ public class InMemoryTaskManager implements TaskManager {
         subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getEpicId()).addSubtask(subtask);
         setEpicStatus(epics.get(subtask.getEpicId()));
+        prioritizedTasks.add(subtask);
     }
 
     @Override
@@ -161,5 +164,9 @@ public class InMemoryTaskManager implements TaskManager {
         } else if(epic.isDone()) {
             epic.status = Status.DONE;
         } else epic.status = Status.IN_PROGRESS;
+    }
+
+    public List<Task> getPrioritizedTasks() {
+        return new ArrayList<>(prioritizedTasks);
     }
 }
