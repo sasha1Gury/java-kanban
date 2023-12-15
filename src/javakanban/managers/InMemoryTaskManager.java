@@ -32,7 +32,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createEpic(Epic epic) throws IllegalStateException {
-        validationTimeOverlaps(epic);
         epic.setId(id++);
         epics.put(epic.getId(), epic);
         prioritizedTasks.add(epic);
@@ -108,6 +107,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteTaskById(int id) {
+        prioritizedTasks.remove(tasks.get(id));
         tasks.remove(id);
     }
 
@@ -141,6 +141,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteSubtaskById(int id) {
         int epicId = subtasks.get(id).getEpicId();
         Epic epic = epics.get(epicId);
+        prioritizedTasks.remove(subtasks.get(id));
         epic.removeSubtaskById(id);
         setEpicStatus(epic);
         subtasks.remove(id);
