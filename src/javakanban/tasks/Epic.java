@@ -66,6 +66,7 @@ public class Epic extends Task {
 
     public void setSubtasks(Subtask subtask) {
         this.subtasks.put(subtask.getId(), subtask);
+        setEpicStatus(this);
     }
 
     public void removeSubtaskById(int id) {
