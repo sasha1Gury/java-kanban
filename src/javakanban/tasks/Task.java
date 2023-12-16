@@ -48,7 +48,7 @@ public class Task {
     @Override
     public String toString() {
         String startTimeString = startTime.format(DateTimeFormatter.ofPattern("yyy.MM.dd HH:mm"));
-        String durationString = String.valueOf(duration.toSeconds());
+        String durationString = String.valueOf(duration.toMinutes());
         return (id + "," + type + "," + taskName + "," + status.toString() + "," + description + ","
                 + durationString + "," + startTimeString);
     }
