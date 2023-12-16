@@ -22,10 +22,10 @@ public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager
 
     @BeforeEach
     void setUp() {
-        task = new Task("epic1", "de");
-        epic = new Epic("epic", "descr");
+        task = new Task("Task", "description");
+        epic = new Epic("epic", "description");
         epic.setId(1);
-        subtask = new Subtask("epic1", "de", epic.getId());
+        subtask = new Subtask("Subtask", "description", epic.getId());
     }
 
     @Test
@@ -40,7 +40,6 @@ public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager
 
         List<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
 
-        // Проверяем, что порядок сортировки соответствует ожиданиям
         Assertions.assertEquals(task2, prioritizedTasks.get(0));
         Assertions.assertEquals(task1, prioritizedTasks.get(1));
         Assertions.assertEquals(task3, prioritizedTasks.get(2));
