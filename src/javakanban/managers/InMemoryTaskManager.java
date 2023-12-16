@@ -6,6 +6,7 @@ import javakanban.tasks.Status;
 import javakanban.tasks.Subtask;
 import javakanban.tasks.Task;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -101,7 +102,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateTask(Task task) throws IllegalStateException {
-        validationTimeOverlaps(task);
         tasks.put(task.getId(), task);
     }
 
@@ -113,7 +113,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateEpic(Epic epic) throws IllegalStateException {
-        validationTimeOverlaps(epic);
         epics.put(epic.getId(), epic);
         setEpicStatus(epic);
 
@@ -130,7 +129,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateSubtask(Subtask subtask) throws IllegalStateException {
-        validationTimeOverlaps(subtask);
         subtasks.put(subtask.getId(), subtask);
         System.out.println();
         epics.get(subtask.getEpicId()).setSubtasks(subtask);
@@ -180,20 +178,30 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void validationTimeOverlaps(Task task) {
-        boolean hasOverlappingTask = getPrioritizedTasks().stream()
-                .anyMatch(existTask -> {
-                    LocalDateTime existStartTime = existTask.getStartTime();
-                    LocalDateTime existEndTime = existTask.getEndTime();
+        LocalDateTime taskStartTime = task.getStartTime();
+        LocalDateTime taskEndTime = task.getEndTime();
+
+        if(prioritizedTasks.isEmpty()) {
+            return;
+        }
+
+        boolean hasOverlappingTask = prioritizedTasks
+                .stream()
+                .anyMatch(existingTask -> {
+                    LocalDateTime existStartTime = existingTask.getStartTime();
+                    LocalDateTime existEndTime = existingTask.getEndTime();
 
                     return Objects.nonNull(existStartTime) &&
                             Objects.nonNull(existEndTime) &&
-                            Objects.nonNull(task.getStartTime()) &&
-                            Objects.nonNull(task.getEndTime()) &&
-                            task.getStartTime().isBefore(existEndTime) &&
-                            task.getEndTime().isAfter(existStartTime);
+                            Objects.nonNull(taskStartTime) &&
+                            Objects.nonNull(taskEndTime) &&
+                            (taskStartTime.isAfter(existEndTime) &&
+                            taskEndTime.isAfter(existEndTime)) ||
+                            (taskStartTime.isBefore(existStartTime) &&
+                                    taskEndTime.isBefore(existStartTime));
                 });
 
-        if (hasOverlappingTask) {
+        if (!hasOverlappingTask) {
             throw new IllegalStateException("Ошибка. Временной интервал задачи пересекается с уже существующей задачей.");
         }
     }
