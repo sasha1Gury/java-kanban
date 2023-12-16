@@ -22,17 +22,17 @@ public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager
 
     @BeforeEach
     void setUp() {
-        task = new Task("Task", "description");
-        epic = new Epic("epic", "description");
+        task = new Task("Task", "description", 60, LocalDateTime.of(2023, 1, 1, 14, 30));
+        epic = new Epic("epic", "description", 60, LocalDateTime.of(2023, 1, 1, 13, 29));
         epic.setId(1);
-        subtask = new Subtask("Subtask", "description", epic.getId());
+        subtask = new Subtask("Subtask", "description", epic.getId(), 60, LocalDateTime.of(2023, 1, 1, 15, 31));
     }
 
     @Test
     void shouldGetPrioritizedTasks() {
         Task task1 = new Task("Task", "description", 60, LocalDateTime.of(2023, 1, 1, 14, 30));
-        Task task2 = new Task("Task", "description", 60, LocalDateTime.of(2023, 1, 1, 13, 30));
-        Task task3 = new Task("Task", "description", 60, LocalDateTime.of(2023, 1, 1, 15, 30));
+        Task task2 = new Task("Task", "description", 60, LocalDateTime.of(2023, 1, 1, 13, 29));
+        Task task3 = new Task("Task", "description", 60, LocalDateTime.of(2023, 1, 1, 15, 31));
 
         taskManager.createTasks(task1);
         taskManager.createTasks(task2);

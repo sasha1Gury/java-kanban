@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 
 public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTasksManager>{
     @BeforeEach
@@ -21,10 +22,10 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTasksMa
 
     @BeforeEach
     void setUp() {
-        task = new Task("epic1", "de");
-        epic = new Epic("epic", "descr");
+        task = new Task("Task", "description", 60, LocalDateTime.of(2023, 1, 1, 14, 30));
+        epic = new Epic("epic", "description", 60, LocalDateTime.of(2023, 1, 1, 13, 29));
         epic.setId(1);
-        subtask = new Subtask("epic1", "de", epic.getId());
+        subtask = new Subtask("Subtask", "description", epic.getId(), 60, LocalDateTime.of(2023, 1, 1, 15, 31));
     }
 
     @Test
