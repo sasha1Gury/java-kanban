@@ -18,10 +18,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTasksMa
     @BeforeEach
     void setTaskManager() {
         taskManager = new FileBackedTasksManager(new File("resource/tasksTest.csv"));
-    }
 
-    @BeforeEach
-    void setUp() {
         task = new Task("Task", "description", 60, LocalDateTime.of(2023, 1, 1, 14, 30));
         epic = new Epic("epic", "description", 60, LocalDateTime.of(2023, 1, 1, 13, 29));
         epic.setId(1);

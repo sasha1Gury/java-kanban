@@ -15,13 +15,10 @@ import java.util.List;
 
 public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
-    @BeforeEach
-    void setTaskManager() {
-        taskManager = new InMemoryTaskManager();
-    }
 
     @BeforeEach
     void setUp() {
+        taskManager = new InMemoryTaskManager();
         task = new Task("Task", "description", 60, LocalDateTime.of(2023, 1, 1, 14, 30));
         epic = new Epic("epic", "description", 60, LocalDateTime.of(2023, 1, 1, 13, 29));
         epic.setId(1);
