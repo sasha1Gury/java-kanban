@@ -6,7 +6,6 @@ import javakanban.tasks.Status;
 import javakanban.tasks.Subtask;
 import javakanban.tasks.Task;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -25,7 +24,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createTasks(Task task) throws IllegalStateException {
-        validationTimeOverlaps(task);
+        validateTimeOverlaps(task);
         task.setId(id++);
         tasks.put(task.getId(), task);
         prioritizedTasks.add(task);
@@ -40,7 +39,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createSubtask(Subtask subtask) throws IllegalStateException {
-        validationTimeOverlaps(subtask);
+        validateTimeOverlaps(subtask);
         subtask.setId(id++);
         subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getEpicId()).addSubtask(subtask);
@@ -177,7 +176,7 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(prioritizedTasks);
     }
 
-    private void validationTimeOverlaps(Task task) {
+    private void validateTimeOverlaps(Task task) {
         LocalDateTime taskStartTime = task.getStartTime();
         LocalDateTime taskEndTime = task.getEndTime();
 
