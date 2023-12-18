@@ -34,7 +34,6 @@ public class InMemoryTaskManager implements TaskManager {
     public void createEpic(Epic epic) throws IllegalStateException {
         epic.setId(id++);
         epics.put(epic.getId(), epic);
-        prioritizedTasks.add(epic);
     }
 
     @Override
