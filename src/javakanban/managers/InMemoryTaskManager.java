@@ -193,13 +193,10 @@ public class InMemoryTaskManager implements TaskManager {
                             Objects.nonNull(existEndTime) &&
                             Objects.nonNull(taskStartTime) &&
                             Objects.nonNull(taskEndTime) &&
-                            (taskStartTime.isAfter(existEndTime) &&
-                            taskEndTime.isAfter(existEndTime)) ||
-                            (taskStartTime.isBefore(existStartTime) &&
-                                    taskEndTime.isBefore(existStartTime));
+                            taskStartTime.isBefore(existEndTime) && taskEndTime.isAfter(existStartTime);
                 });
 
-        if (!hasOverlappingTask) {
+        if (hasOverlappingTask) {
             throw new IllegalStateException("Ошибка. Временной интервал задачи пересекается с уже существующей задачей.");
         }
     }
