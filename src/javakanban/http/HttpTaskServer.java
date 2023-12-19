@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpServer;
 import javakanban.managers.Managers;
 import javakanban.managers.TaskManager;
 import javakanban.tasks.Epic;
+import javakanban.tasks.Subtask;
 import javakanban.tasks.Task;
 
 import java.io.BufferedReader;
@@ -73,12 +74,79 @@ public class HttpTaskServer {
                 case "epic":
                     handleEpic(exc);
                     break;
+                case "subtask":
+                    handleSubtask(exc);
+                    break;
+                default:
+                    System.out.println("Unknown request " + exc.getRequestURI());
+                    exc.sendResponseHeaders(404, 0);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             exc.close();
+        }
+    }
+
+    private void handleSubtask(HttpExchange exc) throws IOException {
+        final String query = exc.getRequestURI().getQuery();
+        System.out.println(query);
+        switch (exc.getRequestMethod()) {
+            case "GET": {
+                if (query == null) {
+                    final List<Subtask> subtasks = taskManager.getListSubtasks();
+                    final String response = gson.toJson(subtasks);
+                    sendResponseText(exc, response);
+                    return;
+                }
+                String idStr = query.substring(3);
+                final int id = Integer.parseInt(idStr);
+                final Subtask subtask = taskManager.getSubtaskById(id);
+                final String response = gson.toJson(subtask);
+                sendResponseText(exc, response);
+                break;
+            }
+            case "DELETE": {
+                if (query == null) {
+                    taskManager.removeSubtasks();
+                    System.out.println("All subtasks delete");
+                    exc.sendResponseHeaders(200, 0);
+                    return;
+                }
+                String idStr = query.substring(3);
+                final int id = Integer.parseInt(idStr);
+                taskManager.deleteSubtaskById(id);
+                System.out.println(id + "subtask delete");
+                exc.sendResponseHeaders(200, 0);
+                break;
+            }
+            case "POST": {
+                String json = readText(exc);
+                if(json.isEmpty()) {
+                    System.out.println("Body is empty");
+                    exc.sendResponseHeaders(400, 0);
+                    return;
+                }
+                final Subtask subtask = gson.fromJson(json, Subtask.class);
+                final Integer id = subtask.getId();
+                if(id != null) {
+                    taskManager.updateSubtask(subtask);
+                    System.out.println("Subtask " + id + " updated");
+                    exc.sendResponseHeaders(200, 0);
+                } else {
+                    taskManager.createSubtask(subtask);
+                    System.out.println("Subtask " + id + "created");
+                    final String response = gson.toJson(subtask);
+                    sendResponseText(exc, response);
+                }
+                break;
+            }
+            default: {
+                System.out.println("/subtask get " + exc.getRequestMethod());
+                exc.sendResponseHeaders(405, 0);
+                break;
+            }
         }
     }
 
