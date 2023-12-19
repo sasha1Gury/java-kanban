@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import javakanban.managers.Managers;
 import javakanban.managers.TaskManager;
+import javakanban.tasks.Epic;
 import javakanban.tasks.Task;
 
 import java.io.BufferedReader;
@@ -69,12 +70,76 @@ public class HttpTaskServer {
                 case "task":
                     handleTask(exc);
                     break;
+                case "epic":
+                    handleEpic(exc);
+                    break;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             exc.close();
+        }
+    }
+
+    private void handleEpic(HttpExchange exc) throws IOException {
+        final String query = exc.getRequestURI().getQuery();
+        System.out.println(query);
+        switch (exc.getRequestMethod()) {
+            case "GET": {
+                if (query == null) {
+                    final List<Epic> epics = taskManager.getListEpics();
+                    final String response = gson.toJson(epics);
+                    sendResponseText(exc, response);
+                    return;
+                }
+                String idStr = query.substring(3);
+                final int id = Integer.parseInt(idStr);
+                final Epic epic = taskManager.getEpicById(id);
+                final String response = gson.toJson(epic);
+                sendResponseText(exc, response);
+                break;
+            }
+            case "DELETE": {
+                if (query == null) {
+                    taskManager.removeEpics();
+                    System.out.println("All epics delete");
+                    exc.sendResponseHeaders(200, 0);
+                    return;
+                }
+                String idStr = query.substring(3);
+                final int id = Integer.parseInt(idStr);
+                taskManager.deleteEpicById(id);
+                System.out.println(id + "epic delete");
+                exc.sendResponseHeaders(200, 0);
+                break;
+            }
+            case "POST": {
+                String json = readText(exc);
+                if(json.isEmpty()) {
+                    System.out.println("Body is empty");
+                    exc.sendResponseHeaders(400, 0);
+                    return;
+                }
+                final Epic epic = gson.fromJson(json, Epic.class);
+                final Integer id = epic.getId();
+                if(id != null) {
+                    taskManager.updateEpic(epic);
+                    System.out.println("Epic " + id + " updated");
+                    exc.sendResponseHeaders(200, 0);
+                } else {
+                    taskManager.createEpic(epic);
+                    System.out.println("Epic " + id + "created");
+                    final String response = gson.toJson(epic);
+                    sendResponseText(exc, response);
+                }
+                break;
+            }
+            default: {
+                System.out.println("/epic get " + exc.getRequestMethod());
+                exc.sendResponseHeaders(405, 0);
+                break;
+            }
         }
     }
 
