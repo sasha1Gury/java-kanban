@@ -27,8 +27,36 @@ public class KVServer {
         server.createContext("/load", this::load);
     }
 
-    private void load(HttpExchange h) {
-        // TODO Добавьте получение значения по ключу
+    private void load(HttpExchange h) throws IOException {
+        try {
+            System.out.println("\n/load");
+            if (!hasAuth(h)) {
+                System.out.println("Запрос неавторизован, нужен параметр в query API_TOKEN со значением апи-ключа");
+                h.sendResponseHeaders(403, 0);
+                return;
+            }
+            if("GET".equals(h.getRequestMethod())) {
+                String key = h.getRequestURI().getPath().substring("/save/".length());
+                if(key.isEmpty()) {
+                    System.out.println("Key is empty");
+                    h.sendResponseHeaders(400, 0);
+                    return;
+                }
+                if(!data.containsKey(key)) {
+                    System.out.println("Not right key");
+                    h.sendResponseHeaders(404, 0);
+                    return;
+                }
+                sendText(h, data.get(key));
+                System.out.println("Value for " + key + "send");
+                h.sendResponseHeaders(200, 0);
+            } else {
+                System.out.println("wait for GET but receive " + h.getRequestMethod());
+                h.sendResponseHeaders(405, 0);
+            }
+        } finally {
+            h.close();
+        }
     }
 
     private void save(HttpExchange h) throws IOException {
