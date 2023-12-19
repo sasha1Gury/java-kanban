@@ -213,7 +213,7 @@ public class HttpTaskServer {
 
     private void handleTask(HttpExchange exc) throws IOException {
         final String query = exc.getRequestURI().getQuery();
-        System.out.println(query);
+        //System.out.println(query);
         switch (exc.getRequestMethod()) {
             case "GET": {
                 if (query == null) {
@@ -258,7 +258,7 @@ public class HttpTaskServer {
                     exc.sendResponseHeaders(200, 0);
                 } else {
                     taskManager.createTasks(task);
-                    System.out.println("Task " + id + "created");
+                    System.out.println("Task " + task.getId() + " created");
                     final String response = gson.toJson(task);
                     sendResponseText(exc, response);
                 }
