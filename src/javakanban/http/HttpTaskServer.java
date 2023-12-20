@@ -1,7 +1,6 @@
 package javakanban.http;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import javakanban.managers.Managers;
@@ -28,7 +27,7 @@ public class HttpTaskServer {
 
     public HttpTaskServer() throws IOException{
         this.taskManager = Managers.getDefault();
-        gson = new GsonBuilder().create();
+        gson = new Gson();
         server = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
         server.createContext("/tasks", this::handle);
     }
