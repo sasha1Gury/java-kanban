@@ -14,7 +14,7 @@ public class KVTaskClient {
 
     public KVTaskClient(String url) {
         this.url = url + "/";
-        apiToken = register(url);
+        apiToken = register(this.url);
     }
 
     private String register(String url) {
