@@ -26,7 +26,7 @@ public class HttpTaskServer {
     private final Gson gson;
     private final TaskManager taskManager;
     public HttpTaskServer() throws IOException {
-        this(Managers.getDefaultFileManager());
+        this(Managers.getDefault());
     }
 
     public HttpTaskServer(TaskManager taskManager) throws IOException{
