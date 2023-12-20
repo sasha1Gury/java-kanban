@@ -37,7 +37,7 @@ public class HttpTaskServer {
         server.start();
     }
 
-    private void start() {
+    public void start() {
         server.start();
     }
 
