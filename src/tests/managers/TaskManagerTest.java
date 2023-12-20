@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class TaskManagerTest<T extends TaskManager> {
-    T taskManager;
-    Task task;
-    Epic epic;
-    Subtask subtask;
+public abstract class TaskManagerTest<T extends TaskManager> {
+    protected T taskManager;
+    protected Task task;
+    protected Epic epic;
+    protected Subtask subtask;
 
     @Test
     public void taskShouldBeAddedInListAfterCreate() {
