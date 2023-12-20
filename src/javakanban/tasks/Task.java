@@ -8,7 +8,7 @@ public class Task {
     protected String taskName;
     protected String description;
     public Status status;
-    protected int id;
+    protected Integer id;
     protected Duration duration;
     protected LocalDateTime startTime;
     protected Type type;
