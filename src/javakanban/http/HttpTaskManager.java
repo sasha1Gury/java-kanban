@@ -14,8 +14,6 @@ public class HttpTaskManager extends FileBackedTasksManager {
     private final Gson gson;
     private final KVTaskClient client;
 
-    //url = "http://localhost:" + 8078 + "/"
-
     public HttpTaskManager(String url) {
         super(null);
         gson = new Gson();
