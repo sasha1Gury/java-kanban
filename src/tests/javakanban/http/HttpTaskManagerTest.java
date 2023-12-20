@@ -6,21 +6,18 @@ import javakanban.server.KVServer;
 import javakanban.tasks.Epic;
 import javakanban.tasks.Subtask;
 import javakanban.tasks.Task;
+import managers.TaskManagerTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class HttpTaskManagerTest {
+public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager> {
     private static KVServer kvServer;
     protected static Gson gson;
-    private static HttpTaskManager httpTaskManager;
 
     HttpTaskManagerTest() {
         super();
@@ -31,7 +28,12 @@ class HttpTaskManagerTest {
         kvServer = new KVServer();
         kvServer.start();
         gson = new Gson();
-        httpTaskManager = Managers.getDefault();
+        taskManager = Managers.getDefault();
+
+        task = new Task("Task", "description", 60, LocalDateTime.of(2023, 1, 1, 14, 30));
+        epic = new Epic("epic", "description", 60, LocalDateTime.of(2023, 1, 1, 13, 29));
+        epic.setId(1);
+        subtask = new Subtask("Subtask", "description", epic.getId(), 60, LocalDateTime.of(2023, 1, 1, 15, 31));
     }
 
     @AfterEach
@@ -42,16 +44,16 @@ class HttpTaskManagerTest {
     @Test
     void shouldSaveAndLoadFromServer() {
         Task task = new Task("Task1", "des");
-        httpTaskManager.createTasks(task);
+        taskManager.createTasks(task);
         Epic epic = new Epic("Task1", "des");
-        httpTaskManager.createEpic(epic);
+        taskManager.createEpic(epic);
         Subtask subtask = new Subtask("Task1", "des", epic.getId());
-        httpTaskManager.createSubtask(subtask);
+        taskManager.createSubtask(subtask);
 
-        httpTaskManager.load();
-        String resultTask = httpTaskManager.getTaskById(task.getId()).toString();
-        String resultEpic = httpTaskManager.getEpicById(epic.getId()).toString();
-        String resultSubtask = httpTaskManager.getSubtaskById(subtask.getId()).toString();
+        taskManager.load();
+        String resultTask = taskManager.getTaskById(task.getId()).toString();
+        String resultEpic = taskManager.getEpicById(epic.getId()).toString();
+        String resultSubtask = taskManager.getSubtaskById(subtask.getId()).toString();
 
 
         Assertions.assertEquals(task.toString(), resultTask);
