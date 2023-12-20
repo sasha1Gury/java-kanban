@@ -1,6 +1,7 @@
 package javakanban.http;
 
 import com.google.gson.Gson;
+import javakanban.managers.Managers;
 import javakanban.server.KVServer;
 import javakanban.tasks.Epic;
 import javakanban.tasks.Subtask;
@@ -30,7 +31,7 @@ class HttpTaskManagerTest {
         kvServer = new KVServer();
         kvServer.start();
         gson = new Gson();
-        httpTaskManager = new HttpTaskManager("http://localhost:8078");
+        httpTaskManager = Managers.getDefault();
     }
 
     @AfterEach
