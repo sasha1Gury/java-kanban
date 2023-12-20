@@ -39,7 +39,7 @@ public class HttpTaskManager extends FileBackedTasksManager {
         addTasks(tasks);
         ArrayList<Epic> epics = gson.fromJson(client.load("epics"), new TypeToken<ArrayList<Epic>>(){}.getType());
         addTasks(epics);
-        ArrayList<Subtask> subtasks = gson.fromJson(client.load("subtasks"), new TypeToken<ArrayList<Task>>(){}.getType());
+        ArrayList<Subtask> subtasks = gson.fromJson(client.load("subtasks"), new TypeToken<ArrayList<Subtask>>(){}.getType());
         addTasks(subtasks);
     }
 
