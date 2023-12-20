@@ -46,16 +46,16 @@ class HttpTaskManagerTest {
         httpTaskManager.createEpic(epic);
         Subtask subtask = new Subtask("Task1", "des", epic.getId());
         httpTaskManager.createSubtask(subtask);
-        List<Task> expectTasks = httpTaskManager.getListTasks();
-        List<Epic> expectEpics = httpTaskManager.getListEpics();
-        List<Subtask> expectSubtasks = httpTaskManager.getListSubtasks();
 
         httpTaskManager.load();
-        List<Task> resultTasks = httpTaskManager.getListTasks();
-        List<Epic> resultEpics = httpTaskManager.getListEpics();
-        List<Subtask> resultSubtasks = httpTaskManager.getListSubtasks();
+        String resultTask = httpTaskManager.getTaskById(task.getId()).toString();
+        String resultEpic = httpTaskManager.getEpicById(epic.getId()).toString();
+        String resultSubtask = httpTaskManager.getSubtaskById(subtask.getId()).toString();
 
-        Assertions.assertArrayEquals(expectTasks.toArray(), resultTasks.toArray());
+
+        Assertions.assertEquals(task.toString(), resultTask);
+        Assertions.assertEquals(epic.toString(), resultEpic);
+        Assertions.assertEquals(subtask.toString(), resultSubtask);
 
     }
 }
