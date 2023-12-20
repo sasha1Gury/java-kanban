@@ -65,16 +65,18 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         if(subtask != null) return subtask;
         return epics.get(id);
     }
-    private void putTasksByTypes(Task task) {
+    protected void putTasksByTypes(Task task) {
         switch (task.getType()){
             case TASK:
                 tasks.put(task.getId(), task);
+                prioritizedTasks.add(task);
                 break;
             case EPIC:
                 epics.put(task.getId(), (Epic)task);
                 break;
             case SUBTASK:
                 subtasks.put(task.getId(), (Subtask) task);
+                prioritizedTasks.add((Subtask) task);
                 break;
         }
     }
