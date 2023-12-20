@@ -132,7 +132,7 @@ public class HttpTaskServer {
                     exc.sendResponseHeaders(200, 0);
                 } else {
                     taskManager.createSubtask(subtask);
-                    System.out.println("Subtask " + id + "created");
+                    System.out.println("Subtask " + subtask.getId() + "created");
                     final String response = gson.toJson(subtask);
                     sendResponseText(exc, response);
                 }
@@ -193,7 +193,7 @@ public class HttpTaskServer {
                     exc.sendResponseHeaders(200, 0);
                 } else {
                     taskManager.createEpic(epic);
-                    System.out.println("Epic " + id + "created");
+                    System.out.println("Epic " + epic.getId() + "created");
                     final String response = gson.toJson(epic);
                     sendResponseText(exc, response);
                 }
