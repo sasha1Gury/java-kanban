@@ -39,6 +39,10 @@ public class HttpTaskManager extends FileBackedTasksManager {
         addTasks(epics);
         ArrayList<Subtask> subtasks = gson.fromJson(client.load("subtasks"), new TypeToken<ArrayList<Subtask>>(){}.getType());
         addTasks(subtasks);
+        ArrayList<Task> history = gson.fromJson(client.load("history"), new TypeToken<ArrayList<Subtask>>(){}.getType());
+        for (Task t : history) {
+            historyManager.addTaskToHistory(t);
+        }
     }
 
     @Override
@@ -49,5 +53,7 @@ public class HttpTaskManager extends FileBackedTasksManager {
         client.put("subtasks", jsonSubtasks);
         String jsonEpics = gson.toJson(getListEpics());
         client.put("epics", jsonEpics);
+        String jsonHistory = gson.toJson(getHistory());
+        client.put("history", jsonHistory);
     }
 }
