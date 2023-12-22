@@ -55,10 +55,10 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager> {
         String resultEpic = taskManager.getEpicById(epic.getId()).toString();
         String resultSubtask = taskManager.getSubtaskById(subtask.getId()).toString();
 
-
         Assertions.assertEquals(task.toString(), resultTask);
         Assertions.assertEquals(epic.toString(), resultEpic);
         Assertions.assertEquals(subtask.toString(), resultSubtask);
+        Assertions.assertEquals(3, taskManager.getHistory().size());
 
     }
 }
