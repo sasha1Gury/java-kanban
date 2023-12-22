@@ -1,5 +1,6 @@
 package javakanban.http;
 
+import javakanban.exception.ManagerSaveException;
 import javakanban.server.KVServer;
 
 import java.io.IOException;
@@ -25,6 +26,9 @@ public class KVTaskClient {
                     .GET()
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new ManagerSaveException("Can't do send request, status code: " + response.statusCode());
+            }
             return response.body();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -39,6 +43,9 @@ public class KVTaskClient {
                     .GET()
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new ManagerSaveException("Can't do send request, status code: " + response.statusCode());
+            }
             return response.body();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
